@@ -11,4 +11,4 @@ Python Scripts
 Java Scripts
 ------------------------------------------------------------------------
 * These will be based on the latest OpenJDK LTS Java Version (as of commit that is Java 11).
-* These will likely be based from [JBang](https://github.com/maxandersen) as this allows libraries to be retrieved.
+* These will likely be based from [JBang](https://github.com/maxandersen/jbang) as this allows libraries to be retrieved.
