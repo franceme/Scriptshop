@@ -1,0 +1,30 @@
+file=
+hash=$(file).sums
+default:: build
+build: hash split
+hash:
+	@echo Creating a hash 512 of the file
+	@sha512sum $(file) >> $(hash)
+verify:
+	@echo Verifying the sums file
+	@shaa512sum -c $(hash)
+split:
+	@echo Splitting the original file
+	@split -b 2G --verbose $(file) split_file_
+	@echo Zipping files
+	@for f in split_file_*;do echo $$f;7z a $$f.zip $$f -sdel -mx=0;done
+join:
+	@echo Unzipping files
+	@for f in split_file_*zip;do echo $$f;7z x $$f;done
+	@echo Removing all of the *.zip files
+	@rm split_file_*zip
+	@echo Joining the files
+	@cat split_file_* > $(file)
+	@echo Removing the split files
+	@rm split_file_*
+	@echo Checking the hash file
+	@sha512sum -c $(hash)
+	@echo Unzipping the files
+	@7z x $(file)
+	@Removing the zip file
+	@rm $(file)
